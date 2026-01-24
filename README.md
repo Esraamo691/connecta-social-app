@@ -1,16 +1,75 @@
-# React + Vite
+# Connecta – Social Media Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+**Connecta** is a modern social media web application that enables users to share posts, interact through comments, and manage their profiles in a clean and minimal interface.
 
-Currently, two official plugins are available:
+The project focuses on core social features with a clear separation of concerns and a scalable structure, making it suitable as a graduation project or portfolio showcase.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
+- User authentication (Sign up / Sign in)
+- Secure password management
+- User profile management with profile photo upload
+- Create, read, update, and delete posts
+- View all posts or posts by a specific user
+- Comment system with full CRUD operations
+- Clean and responsive UI with no distracting elements
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+- React  
+- Tailwind CSS  
+- Flowbite  
+
+### Backend
+- RESTful API  
+- Authentication & authorization  
+- Modular endpoints structure (Users, Posts, Comments)
+
+---
+
+## API Structure
+The backend follows a RESTful architecture with clearly organized endpoints.
+
+### Users
+- `POST /users/signup` – Register a new user  
+- `POST /users/signin` – User login  
+- `PATCH /users/change-password` – Change user password  
+- `PUT /users/upload-profile-photo` – Upload profile picture  
+- `GET /users/me` – Get logged-in user data  
+
+### Posts
+- `POST /posts` – Create a new post  
+- `GET /posts` – Get all posts  
+- `GET /posts/user/:id` – Get posts by user  
+- `GET /posts/:id` – Get single post  
+- `PUT /posts/:id` – Update post  
+- `DELETE /posts/:id` – Delete post  
+
+### Comments
+- `POST /comments` – Create a comment  
+- `GET /comments/post/:id` – Get post comments  
+- `PUT /comments/:id` – Update comment  
+- `DELETE /comments/:id` – Delete comment  
+
+---
+
+## UI & Design Philosophy
+- Minimal and distraction-free interface  
+- No unnecessary icons or visual noise  
+- Focus on readability and usability  
+- Responsive layout for different screen sizes  
+
+---
+
+## Project Purpose
+This project was built to demonstrate:
+- Real-world social media workflows  
+- Clean frontend architecture using React  
+- Proper handling of user-generated content  
+- Practical use of modern UI frameworks  
+- Full CRUD operations with meaningful interactions

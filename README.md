@@ -23,7 +23,7 @@ The project focuses on core social features with a clear separation of concerns 
 ### Frontend
 - React  
 - Tailwind CSS  
-- Flowbite  
+- Hero UI  
 
 ### Backend
 - RESTful API  

@@ -1,1 +1,58 @@
+@font-face {
+  font-family: "PlaywritePL";
+  src: url("./assets/fonts/PlaywritePL-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PlaywritePL";
+  src: url("./assets/fonts/PlaywritePL-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
 @import "tailwindcss";
+@plugin './hero.js';
+/* Note: You may need to change the path to fit your project structure */
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-logo: "PlaywritePL", "sans-serif";
+  --font-variable: "VariableFont_wght", "sans-serif";
+}
+
+@layer base {
+  /* body {
+    @apply font-logo;
+  } */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold font-logo;
+  }
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  h4 {
+    @apply text-lg;
+  }
+}
+
+@layer utilities {
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .navyt {
+    @apply font-logo;
+  }
+}

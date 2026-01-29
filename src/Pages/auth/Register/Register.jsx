@@ -72,7 +72,7 @@ export default function Register() {
     console.log(data);
     try {
       const { data: response } = await axios.post(
-        "https://linked-posts.routemisr.com/users/signup",
+        `${import.meta.env.VITE_BASE_URL}/users/signup`,
         data,
       );
       if (response.message === "success") {

@@ -1,7 +1,11 @@
+import Add from "./Add";
+import PostsList from "./PostsList/PostsList";
+
 export default function Posts() {
   return (
     <>
-      <p>posts </p>
+      <Add />
+      <PostsList />
     </>
   );
 }

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloudUpload } from "react-icons/io";
 import AppButton from "../../Components/Shared/AppButton/AppButton";
+import { toast } from "react-toastify";
 
 export default function Add() {
   const fileInputRef = useRef();
@@ -17,7 +18,9 @@ export default function Add() {
   async function addPost(data) {
     const formData = new FormData();
     formData.append("body", data.body);
-    formData.append("image", fileInputRef.current.files[0]);
+    if (fileInputRef.current.files[0]) {
+      formData.append("image", fileInputRef.current.files[0]);
+    }
     try {
       const { data: message } = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/posts`,
@@ -30,11 +33,19 @@ export default function Add() {
       );
       if (message === "success") {
         reset();
+        toast.success("Post Created Successfully", {
+          theme: "dark",
+          position: "top-center",
+        });
       } else {
         throw new Error("someting went wrong");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Post Creation Failed", {
+        theme: "dark",
+        position: "top-center",
+      });
     }
   }
   return (

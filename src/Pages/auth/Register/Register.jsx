@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert } from "@heroui/react";
+import { Alert, DatePicker } from "@heroui/react";
 import { DateInput } from "@heroui/react";
 import { parseDate } from "@internationalized/date";
 import { Form, Input } from "@heroui/react";
@@ -161,7 +161,7 @@ export default function Register() {
                   name="dateOfBirth"
                   control={control}
                   render={({ field }) => (
-                    <DateInput
+                    <DatePicker
                       variant="faded"
                       label="Birth date"
                       value={field.value ? parseDate(field.value) : null}

@@ -1,49 +1,33 @@
-import React, { useEffect, useState } from "react";
 import PostItem from "../PostItem/PostItem";
-import axios from "axios";
+import { AuthContext } from "../../../Context/AuthContext";
+import { useContext } from "react";
+import useFetch from "../../../hooks/useFetch";
+import Loader from "../../../Components/Loader/Loader";
 
-export default function PostsList() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [Apierror, setApierror] = useState(null);
-  const [posts, setPosts] = useState(null);
-  async function getAllPosts() {
-    setIsLoading(true);
-    try {
-      const {
-        data: { posts },
-      } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/posts?limit=50&sort=-createdAt`,
-        {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
-        },
-      );
-      setPosts(posts);
-      setApierror(null);
-    } catch (error) {
-      console.log(error);
-      setApierror(error.response.data.error);
-      setPosts(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    getAllPosts();
-  }, []);
+export default function PostsList({ isHome = true }) {
+  const { dataProfile } = useContext(AuthContext);
+  const queryKey = isHome ? ["all-posts"] : ["profile-posts"];
+  const apiUrl = isHome
+    ? `posts?limit=30&sort=-createdAt`
+    : `users/${dataProfile?._id}/posts`;
+  const { data, isError, isLoading, error } = useFetch(
+    queryKey,
+    apiUrl,
+    dataProfile,
+  );
 
   return (
     <section className="py-12">
       <div className="max-w-3xl mx-auto">
         <div className="flex flex-col gap-7">
-          {isLoading && <div className="text-center text-4xl">Loading...</div>}
-          {Apierror && (
-            <div className="text-center text-4xl text-red-400">{Apierror}</div>
+          {isLoading && <Loader />}
+          {isError && (
+            <div className="text-center text-4xl text-red-400">
+              {error.response?.data?.message || error.message}
+            </div>
           )}
-          {posts &&
-            posts.map((post) => <PostItem key={post._id} post={post} />)}
+          {data &&
+            data.posts.map((post) => <PostItem key={post._id} post={post} />)}
         </div>
       </div>
     </section>

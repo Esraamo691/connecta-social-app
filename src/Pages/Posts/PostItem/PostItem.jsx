@@ -1,56 +1,134 @@
-import { Avatar, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
+// import { Avatar, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
+// import { AiFillLike } from "react-icons/ai";
+// import { BiSolidMessageRoundedDots } from "react-icons/bi";
+// import { FaShare } from "react-icons/fa";
+// import { Link } from "react-router-dom";
+// import PostHeader from "../PostHeader";
+// import CreateComment from "../CreateComment";
+// export default function PostItem({ post, showAllComments = false }) {
+//   const { body, image, createdAt, user, comments, _id } = post;
+//   return (
+//     <>
+//       <Card className="py-4 max-w-3xl bg-gray-800">
+//         <PostHeader user={{ ...user, createdAt, body }} />
+//         <CardBody>
+//           {image && (
+//             <img alt={body} className="object-cover rounded-xl" src={image} />
+//           )}
+//         </CardBody>
+//         <CardFooter>
+//           <div className="flex items-center justify-between w-full text-2xl">
+//             <AiFillLike />
+//             <div className="flex items-end gap-2">
+//               <BiSolidMessageRoundedDots />
+//               {comments && comments.length}
+//             </div>
+
+//             <Link to={`/posts/${_id}`}>
+//               <FaShare />
+//             </Link>
+//           </div>
+//         </CardFooter>
+//         {/* comments */}
+//         {comments && comments.length > 0 && showAllComments ? (
+//           comments.map((comment) => (
+//             <PostHeader
+//               user={{
+//                 ...comment.commentCreator,
+//                 createdAt: comment.createdAt,
+//                 body: comment.content,
+//               }}
+//               isComment={true}
+//             />
+//           ))
+//         ) : (
+//           <PostHeader
+//             user={{
+//               ...comments[comments.length - 1].commentCreator,
+//               createdAt: comments[comments.length - 1].createdAt,
+//               body: comments[comments.length - 1].content,
+//             }}
+//             isComment={true}
+//           />
+//         )}
+
+//         <CreateComment post={_id} />
+//       </Card>
+//     </>
+//   );
+// }
+import { Card, CardBody, CardFooter } from "@heroui/react";
 import { AiFillLike } from "react-icons/ai";
 import { BiSolidMessageRoundedDots } from "react-icons/bi";
 import { FaShare } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import PostHeader from "../PostHeader";
-export default function PostItem({ post, showAllComments = false }) {
-  const { body, image, createdAt, user, comments, _id } = post;
-  return (
-    <>
-      <Card className="py-4 max-w-3xl bg-gray-800">
-        <PostHeader user={{ ...user, createdAt, body }} />
-        <CardBody>
-          {image && (
-            <img alt={body} className="object-cover rounded-xl" src={image} />
-          )}
-        </CardBody>
-        <CardFooter>
-          <div className="flex items-center justify-between w-full text-2xl">
-            <AiFillLike />
-            <div className="flex items-end gap-2">
-              <BiSolidMessageRoundedDots />
-              {comments && comments.length}
-            </div>
+import CreateComment from "../CreateComment";
 
-            <Link to={`/posts/${_id}`}>
-              <FaShare />
-            </Link>
+export default function PostItem({ post, showAllComments = false }) {
+  if (!post) return null;
+
+  const { body, image, createdAt, user, comments, _id } = post;
+
+  const hasComments = comments.length > 0;
+  const lastComment = hasComments ? comments[comments.length - 1] : null;
+
+  return (
+    <Card className="py-4 max-w-3xl bg-gray-800">
+      {/* post header */}
+      <PostHeader user={{ ...user, createdAt, body }} postId={_id} />
+
+      {/* post image */}
+      <CardBody>
+        {image && (
+          <img alt={body} className="object-cover rounded-xl" src={image} />
+        )}
+      </CardBody>
+
+      {/* footer */}
+      <CardFooter>
+        <div className="flex items-center justify-between w-full text-2xl">
+          <AiFillLike />
+
+          <div className="flex items-end gap-2">
+            <BiSolidMessageRoundedDots />
+            {comments.length}
           </div>
-        </CardFooter>
-        {/* comments */}
-        {comments && comments.length > 0 && showAllComments ? (
-          comments.map((comment) => (
-            <PostHeader
-              user={{
-                ...comment.commentCreator,
-                createdAt: comment.createdAt,
-                body: comment.content,
-              }}
-              isComment={true}
-            />
-          ))
-        ) : (
+
+          <Link to={`/posts/${_id}`}>
+            <FaShare />
+          </Link>
+        </div>
+      </CardFooter>
+
+      {/* comments */}
+      {hasComments &&
+        showAllComments &&
+        comments.map((comment) => (
           <PostHeader
+            key={comment._id}
             user={{
-              ...comments[0].commentCreator,
-              createdAt: comments[0].createdAt,
-              body: comments[0].content,
+              ...comment.commentCreator,
+              createdAt: comment.createdAt,
+              body: comment.content,
             }}
             isComment={true}
           />
-        )}
-      </Card>
-    </>
+        ))}
+
+      {hasComments && !showAllComments && lastComment && (
+        <PostHeader
+          user={{
+            ...lastComment.commentCreator,
+            createdAt: lastComment.createdAt,
+            body: lastComment.content,
+          }}
+          isComment={true}
+        />
+      )}
+
+      {/* create comment */}
+      <CreateComment post={_id} />
+    </Card>
   );
 }

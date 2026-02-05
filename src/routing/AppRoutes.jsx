@@ -8,6 +8,7 @@ import NotFound from "../Pages/NotFound/NotFound";
 import ProtectedRoutes from "./ProtectedRoutes";
 import ProtectedAuthRoutes from "./ProtectedAuthRoutes";
 import PostDetails from "../Pages/PostDetails/PostDetails";
+import Profile from "../Pages/auth/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoutes>
             <Posts />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <ProtectedRoutes>
+            <Profile />
           </ProtectedRoutes>
         ),
       },

@@ -1,10 +1,10 @@
-import Add from "./Add";
+import CreatePost from "./CreatePost";
 import PostsList from "./PostsList/PostsList";
 
 export default function Posts() {
   return (
     <>
-      <Add />
+      <CreatePost />
       <PostsList />
     </>
   );
